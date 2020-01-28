@@ -4,7 +4,6 @@ import { MemberListComponent } from './member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { AuthService } from './_services/auth.service';
 
 // tslint:disable-next-line: one-variable-per-declaration
 export const appRoutes: Routes = [
@@ -12,7 +11,7 @@ export const appRoutes: Routes = [
   {
     path: '',
     runGuardsAndResolvers: 'always',
-    canActivate: [AuthService],
+    canActivate: [AuthGuard],
     children: [
       { path: 'members', component: MemberListComponent,},
       { path: 'messages', component: MessagesComponent },
