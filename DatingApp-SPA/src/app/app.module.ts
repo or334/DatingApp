@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -19,9 +19,22 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { MemberCardComponent } from './members/member-list/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-list/member-detail/member-detail.component';
+import { MemeberDetailResolver } from './_resolvers/member-detail.resolver';
+import { AlertifyService } from './_services/AlertifyService.service';
+import { AuthGuard } from './_guards/auth.guard';
+import { UserService } from './_services/user.service';
+import { MemeberListResolver } from './_resolvers/member-list.resolver';
+import {NgxGalleryModule} from 'ngx-gallery';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
+}
+
+export class CustomHammerConfig extends HammerGestureConfig  {
+   overrides = {
+       pinch: { enable: false },
+       rotate: { enable: false }
+   };
 }
 
 @NgModule({
@@ -41,8 +54,10 @@ export function tokenGetter() {
       HttpClientModule,
       FormsModule,
       BrowserAnimationsModule,
+      TabsModule.forRoot(),
       BsDropdownModule.forRoot(),
       RouterModule.forRoot(appRoutes),
+      NgxGalleryModule,
       JwtModule.forRoot({
          config: {
             // tslint:disable-next-line: object-literal-shorthand
@@ -54,7 +69,13 @@ export function tokenGetter() {
    ],
    providers: [
       AuthService,
-      ErrorIntercaptorProvider
+      ErrorIntercaptorProvider,
+      AlertifyService,
+      AuthGuard,
+      UserService,
+      MemeberDetailResolver,
+      MemeberListResolver,
+      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
    ],
    bootstrap: [
       AppComponent
