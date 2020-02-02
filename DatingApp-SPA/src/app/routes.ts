@@ -7,6 +7,9 @@ import { AuthGuard } from './_guards/auth.guard';
 import { MemberDetailComponent } from './members/member-list/member-detail/member-detail.component';
 import { MemeberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemeberListResolver } from './_resolvers/member-list.resolver';
+import { MemberEditComponent } from './members/member-list/member-edit/member-edit.component';
+import { MemeberEditResolver } from './_resolvers/member-edit.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 // tslint:disable-next-line: one-variable-per-declaration
 export const appRoutes: Routes = [
@@ -18,6 +21,7 @@ export const appRoutes: Routes = [
     children: [
       { path: 'members', component: MemberListComponent,  resolve: {users: MemeberListResolver}},
       { path: 'members/:id', component: MemberDetailComponent, resolve: {user: MemeberDetailResolver}},
+      { path: 'member/edit', component: MemberEditComponent, resolve: {user: MemeberEditResolver}, canDeactivate: [PreventUnsavedChanges]},
       { path: 'messages', component: MessagesComponent },
       { path: 'lists', component: ListsComponent }
     ]
