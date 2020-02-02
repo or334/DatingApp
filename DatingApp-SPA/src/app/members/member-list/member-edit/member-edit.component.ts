@@ -20,6 +20,7 @@ export class MemberEditComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line: member-ordering
   user: User;
   constructor(
     private route: ActivatedRoute,
