@@ -28,6 +28,9 @@ import {NgxGalleryModule} from 'ngx-gallery';
 import { MemberEditComponent } from './members/member-list/member-edit/member-edit.component';
 import { MemeberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoEditorComponent } from './members/member-list/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { CommonModule } from '@angular/common';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -51,17 +54,20 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      CommonModule,
       BrowserAnimationsModule,
       TabsModule.forRoot(),
       BsDropdownModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
+      FileUploadModule,
       JwtModule.forRoot({
          config: {
             // tslint:disable-next-line: object-literal-shorthand
