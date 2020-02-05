@@ -6,6 +6,6 @@ export interface Pagination {
 }
 
 export class PaginatedResult<T> {
-    result: T; // where we'll store users/messages
+    result: T;
     pagination: Pagination;
 }

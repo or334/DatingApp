@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../_models/user';
 import { UserService } from '../../_services/user.service';
-import { AlertifyService } from '../../_services/AlertifyService.service';
-import { ActivatedRoute } from '@angular/router';
-import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
+import { AlertifyService } from '../../_services/alertify.service';
+import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { Pagination, PaginatedResult } from '../../_models/pagination';
 
 @Component({
   selector: 'app-member-list',
@@ -17,14 +17,15 @@ export class MemberListComponent implements OnInit {
   userParams: any = {};
   pagination: Pagination;
 
-  constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute) { }
+  constructor(private userService: UserService, private alertify: AlertifyService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      // tslint:disable-next-line: no-string-literal
       this.users = data['users'].result;
       this.pagination = data['users'].pagination;
     });
+
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
@@ -52,4 +53,5 @@ export class MemberListComponent implements OnInit {
       this.alertify.error(error);
     });
   }
+
 }

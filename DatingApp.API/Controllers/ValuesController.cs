@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,31 +9,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
-        public ValuesController(ApplicationDbContext context)
+        private readonly DataContext _context;
+        public ValuesController(DataContext context)
         {
             _context = context;
         }
 
-        [AllowAnonymous]
+        // GET api/values
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetValues()
         {
             var values = await _context.Values.ToListAsync();
+
             return Ok(values);
         }
 
-        [AllowAnonymous]
+        // GET api/values/5
+        [Authorize(Roles = "Member")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
-            var value = await _context.Values.FirstOrDefaultAsync(x=> x.Id == id);
+            var value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);
+
             return Ok(value);
         }
 

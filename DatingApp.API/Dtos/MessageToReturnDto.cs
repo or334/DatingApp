@@ -16,4 +16,4 @@ namespace DatingApp.API.Dtos
         public DateTime? DateRead { get; set; }
         public DateTime MessageSent { get; set; }
     }
-} 
+}
